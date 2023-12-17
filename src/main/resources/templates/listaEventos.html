@@ -6,6 +6,38 @@
     <title>Eventos</title>
 </head>
 <body>
-    
+	<section class="menu">
+		<h3>Menu</h3>
+		<ul>
+			<li><a th:href="@{'/'}">Página inicial</a></li>
+			<li><a th:href="@{listaDeputados}">Deputados</a></li>
+			<li>Eventos</li>
+			<li><a th:href="@{inscrever}">Inscrição</a></li>
+		</ul>
+	</section>
+	
+	<h1 class="titulo-de-pagina">Eventos</h1>
+	
+	<section>
+        <table th:unless="${#lists.size(eventos) == 0}">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="evento : ${eventos}">
+                    <td th:text="${evento.id}"></td>
+                    <td th:text="${evento.descricaoTipo}"></td>
+                    <td th:text="${evento.descricao}"></td>
+                    <!-- excluir evento (popup, escrever o nome?) -->
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.size(eventos) == 0}">Nenhum evento para mostrar</div>
+        <!-- adicionar evento? -->
+    </section>
 </body>
 </html>

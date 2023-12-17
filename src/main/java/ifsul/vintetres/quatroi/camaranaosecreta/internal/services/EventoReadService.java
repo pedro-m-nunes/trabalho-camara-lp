@@ -36,10 +36,18 @@ public class EventoReadService implements ReadService<Evento, Integer> {
 	public boolean existsById(Integer id) {
 		return eventoRepository.existsById(id);
 	}
+	
+	public List<Evento> findWhereDeputadoIsSubscribed(Integer deputadoId) {
+		return eventoRepository.findAllBySubscribedDeputado(deputadoId);
+	}
+	
+	public List<Evento> findWhereDeputadoIsNotSubscribed(Integer deputadoId) {
+		return eventoRepository.findAllByNotSubscribedDeputado(deputadoId);
+	}
 
-	public List<List<Evento>> findSubscribedAndNotByDeputado(Integer deputadoId) {
-		List<Evento> subscribedEventos = eventoRepository.findAllBySubscribedDeputado(deputadoId);
-		List<Evento> notSubscribedEventos = eventoRepository.findAllByNotSubscribedDeputado(deputadoId);
+	public List<List<Evento>> findSubscribedAndNotByDeputado(Integer deputadoId) { // ""?
+		List<Evento> subscribedEventos = findWhereDeputadoIsSubscribed(deputadoId);
+		List<Evento> notSubscribedEventos = findWhereDeputadoIsNotSubscribed(deputadoId);
 
 		return Arrays.asList(subscribedEventos, notSubscribedEventos);
 	}

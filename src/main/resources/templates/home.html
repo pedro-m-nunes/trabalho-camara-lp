@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Página inicial</title>
 </head>
 <body>
+	<h1 class="titulo-de-pagina">Página inicial</h1>
 
-  <section>
-    <div>Telas</div>
-    <ul>
-      <li><a th:href="@{listaDeputados}">Lista de deputados</a></li>
-      <li><a th:href="@{listaEventos}">Lista de eventos</a></li>
-      <li><a th:href="@{inscrever}">Inscrever deputado em evento</a></li>
-    </ul>
-  </section>
+	<section>
+		<div>Páginas</div>
+		<ul>
+			<li><a th:href="@{listaDeputados}">Deputados</a></li>
+			<li><a th:href="@{listaEventos}">Eventos</a></li>
+			<li><a th:href="@{inscrever}">Inscrição</a></li>
+		</ul>
+	</section>
 
-  <section>
-    <div>Banco de dados</div>
-    <ul>
-      <li><a th:href="@{h2-console}">H2 Console</a></li>
-    </ul>
-  </section>
+	<section>
+		<div>Outros</div>
+		<ul>
+			<li>Documentação da API (em breve)</li>
+			<li><a th:href="@{h2-console}">Banco de dados</a></li>
+			<li><a href="https://dadosabertos.camara.leg.br/swagger/api.html">API da Câmara dos Deputados</a></li>
+		</ul>
+	</section>
 
 </body>
 </html>

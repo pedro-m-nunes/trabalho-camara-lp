@@ -25,10 +25,6 @@ public class TemplateController {
 	
 	@Autowired
 	private EventoUpdateService eventoUpdateService;
-	
-	private void addDeputadoToModelIfPresent(ModelAndView modelAndView, Integer id) { // Exception throwIfNotPresent?
-		deputadoReadService.findById(id).ifPresent(deputado -> modelAndView.addObject("deputado", deputado));
-	}
 
 	@GetMapping("/")
 	public String home() {
@@ -71,7 +67,7 @@ public class TemplateController {
 
 		modelAndView.addObject("listasEventos", eventoReadService.findSubscribedAndNotByDeputado(deputadoId));
 		
-		addDeputadoToModelIfPresent(modelAndView, deputadoId);
+		deputadoReadService.findById(deputadoId).ifPresent(deputado -> modelAndView.addObject("deputado", deputado));
 
 		return modelAndView;
 	}
@@ -86,6 +82,9 @@ public class TemplateController {
 		deputadoReadService.findById(deputadoId).ifPresent(deputado -> modelAndView.addObject("deputado", deputado));
 		
 		eventoReadService.findById(eventoId).ifPresent(evento -> modelAndView.addObject("evento", evento));
+		
+		modelAndView.addObject("eventosNaoInscrito", eventoReadService.findWhereDeputadoIsNotSubscribed(deputadoId));
+		modelAndView.addObject("deputados", deputadoReadService.findAllInAlphabeticalOrder());
 		
 		return modelAndView;
 	}

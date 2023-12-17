@@ -37,5 +37,11 @@ public class Evento {
 	
 	@ManyToMany
 	private Set<Deputado> inscritos;
+
+	public Evento(String descricaoTipo, String descricao) {
+		super();
+		this.descricaoTipo = descricaoTipo;
+		this.descricao = descricao;
+	}
 	
 }

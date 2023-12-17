@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventos</title>
+    <title th:text="${deputado.nome}"></title>
 </head>
 <body>
-    <div>Deputado(a): <span th:text="${deputado.nome}"></span></div>
+	<section class="menu">
+		<h3>Menu</h3>
+		<ul>
+			<li><a th:href="@{'/'}">Página inicial</a></li>
+			<li><a th:href="@{../listaDeputados}">Deputados</a></li>
+			<li><a th:href="@{../listaEventos}">Eventos</a></li>
+			<li><a th:href="@{../inscrever}">Inscrição</a></li>
+		</ul>
+	</section>
+	
+	<h1 class="titulo-de-pagina">Página do(a) deputado(a)</h1>
+
+    <h2 th:text="${deputado.nome}"></h2>
     <img th:src="@{|https://www.camara.leg.br/internet/deputado/bandep/${deputado.id}.jpg|}" alt="Foto do(a) deputado(a)">
     <div><a th:href="@{|../inscrever?deputadoId=${deputado.id}|}">Inscrever em evento</a></div>
     
     <section th:each="eventos, iter : ${listasEventos}">
-        <div>
+        <h2>
             Eventos <span th:switch="${iter.index}">
                 <span th:case="0">inscrito</span>
                 <span th:case="1">não inscrito</span>
-            </span>
-        </div>
-        <table>
+            </span> <!-- ""? -->
+        </h2>
+        <table th:unless="${#lists.size(eventos) == 0}">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
@@ -34,10 +46,10 @@
                         <!--<a th:href="" th:case="0">Desinscrever</a>-->
                         <a th:href="@{|/../../inscrever?deputadoId=${deputado.id}&eventoId=${evento.id}|}" th:case="1">Inscrever</a> <!-- form? -->
                     </td>
-                    <!-- excluir (popup, escrever o nome?) -->
                 </tr>
             </tbody>
         </table>
+        <div th:if="${#lists.size(eventos) == 0}">Nenhum evento para mostrar</div>
     </section>
 </body>
 </html>

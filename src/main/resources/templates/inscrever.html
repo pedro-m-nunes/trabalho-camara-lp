@@ -3,18 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscrever</title>
+    <title>Inscrição</title>
 </head>
 <body>
-	<div>Evento: <span th:text="${evento?.id}"></span></div>
-	<div>Deputado: <span th:text="${deputado?.nome}"></span></div>
+	<section class="menu">
+		<h3>Menu</h3>
+		<ul>
+			<li><a th:href="@{'/'}">Página inicial</a></li>
+			<li><a th:href="@{listaDeputados}">Deputados</a></li>
+			<li><a th:href="@{listaEventos}">Eventos</a></li>
+			<li>Inscrição</li>
+		</ul>
+	</section>
+
+	<h1 class="titulo-de-pagina">Inscrição</h1>
+
+	<!--<div>Evento: <span th:text="${evento?.id}"></span></div>
+	<div>Deputado: <span th:text="${deputado?.nome}"></span></div>-->
 	
     <form action="#" th:action="@{inscrever}" th:method="put">
         <label for="eventoId">Evento</label>
-        <input type="number" id="eventoId" name="eventoId" th:value="${evento?.id}"> <!-- select -->
+        <select id="eventoId" name="eventoId">
+        	<option th:each="opcaoEvento : ${eventosNaoInscrito}" th:value="${opcaoEvento.id}" th:text="${opcaoEvento.id} + ' - ' + ${opcaoEvento.descricaoTipo}" th:selected="${opcaoEvento.id == __${evento?.id}__}"></option>
+        </select>
         
-        <label for="deputadoId">Deputado</label>
-        <input type="number" id="deputadoId" name="deputadoId" th:value="${deputado?.id}"> <!-- select -->
+        <label for="deputadoId">Deputado(a)</label>
+        <select id="deputadoId" name="deputadoId">
+        	<option th:each="opcaoDeputado : ${deputados}" th:value="${opcaoDeputado.id}" th:text="${opcaoDeputado.nome} + ' (' + ${opcaoDeputado.id} + ')'" th:selected="${opcaoDeputado.id == __${deputado?.id}__}"></option>
+        </select>
 
         <input type="submit" value="Inscrever">
     </form>
