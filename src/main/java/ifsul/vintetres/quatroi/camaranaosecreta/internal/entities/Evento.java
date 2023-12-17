@@ -1,6 +1,5 @@
 package ifsul.vintetres.quatroi.camaranaosecreta.internal.entities;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -26,23 +25,17 @@ public class Evento {
 	private Integer id;
 	
 	@Column(nullable = false)
-	private String nome;
+	private String descricaoTipo;
 	
-//	private String descricao;
+	@Column(length = 2047) // ?
+	private String descricao;
 	
-	@Column(nullable = false)
-	private LocalDateTime inicio, fim; // ""? // fim > inicio
+//	@Column(nullable = false)
+//	private LocalDateTime dataHoraInicio, dataHoraFim; // fim > inicio // JsonDeserializer
 	
-	// local...
+	// local?
 	
 	@ManyToMany
 	private Set<Deputado> inscritos;
-
-	public Evento(String nome, LocalDateTime inicio, LocalDateTime fim) { // ?
-		super();
-		this.nome = nome;
-		this.inicio = inicio;
-		this.fim = fim;
-	}
 	
 }

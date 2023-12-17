@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 import ifsul.vintetres.quatroi.camaranaosecreta.external.APIService;
 import ifsul.vintetres.quatroi.camaranaosecreta.internal.entities.Deputado;
 import ifsul.vintetres.quatroi.camaranaosecreta.internal.repositories.DeputadoRepository;
+import ifsul.vintetres.quatroi.camaranaosecreta.internal.services.interfaces.APICloner;
 import ifsul.vintetres.quatroi.camaranaosecreta.internal.services.interfaces.CreateService;
 
 @Service
-public class DeputadoCreateService implements CreateService<Deputado> {
+public class DeputadoCreateService implements CreateService<Deputado>, APICloner<Deputado> {
 
 	@Autowired
 	private DeputadoRepository deputadoRepository;
@@ -28,11 +29,13 @@ public class DeputadoCreateService implements CreateService<Deputado> {
 	
 	@Autowired
 	private APIService apiService;
-	
+
+	@Override
 	public Deputado cloneFromAPI(int id) {
 		return save(apiService.getDeputado(id));
 	}
-	
+
+	@Override
 	public List<Deputado> cloneAllFromAPI() {
 		return saveAll(apiService.getAllDeputados());
 	}

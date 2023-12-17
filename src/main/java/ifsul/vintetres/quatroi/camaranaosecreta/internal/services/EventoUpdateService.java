@@ -31,6 +31,8 @@ public class EventoUpdateService implements UpdateService<Evento, Integer> {
 		return eventoRepository.save(evento);
 	}
 	
-	// addDeputados
+	// subscribeAll?
+	
+	// unsubscribe?
 
 }

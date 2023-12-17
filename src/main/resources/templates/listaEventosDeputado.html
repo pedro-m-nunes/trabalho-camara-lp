@@ -6,61 +6,38 @@
     <title>Eventos</title>
 </head>
 <body>
-    <div>Deputado: <span th:text="${deputado.nome}"></span></div>
+    <div>Deputado(a): <span th:text="${deputado.nome}"></span></div>
+    <img th:src="@{|https://www.camara.leg.br/internet/deputado/bandep/${deputado.id}.jpg|}" alt="Foto do(a) deputado(a)">
+    <div><a th:href="@{|../inscrever?deputadoId=${deputado.id}|}">Inscrever em evento</a></div>
     
-    <section>
-        <div>Eventos inscrito</div>
-        
-        <div> <!-- each? -->
-            <div>Eventos em andamento</div> <!-- em andamento, futuros, passados -->
-            <table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Início</th>
-                            <th scope="col">Fim</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="evento : ${eventosInscrito}">
-                            <td th:text="${evento.id}"></td>
-                            <td th:text="${evento.nome}"></td>
-                            <td th:text="${evento.inicio}"></td>
-                            <td th:text="${evento.fim}"></td>
-                            <!-- desinscrever -->
-                            <!-- excluir (popup, escrever o nome?) -->
-                        </tr>
-                    </tbody>
-                </table>
-            </table>
+    <section th:each="eventos, iter : ${listasEventos}">
+        <div>
+            Eventos <span th:switch="${iter.index}">
+                <span th:case="0">inscrito</span>
+                <span th:case="1">não inscrito</span>
+            </span>
         </div>
-    </section>
-
-    <section>
-        <div>Eventos em andamento</div>
         <table>
             <thead>
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Início</th>
-                    <th scope="col">Fim</th>
+                    <th scope="col">Descrição</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="evento : ${eventosAndamento}">
+                <tr th:each="evento : ${eventos}">
                     <td th:text="${evento.id}"></td>
-                    <td th:text="${evento.nome}"></td>
-                    <td th:text="${evento.inicio}"></td>
-                    <td th:text="${evento.fim}"></td>
-                    <td><a th:href="@{|../inscrever?eventoId=${evento.id}&deputadoId=${deputado.id}|}">Inscrever</a></td>
+                    <td th:text="${evento.descricaoTipo}"></td>
+                    <td th:text="${evento.descricao}"></td>
+                    <td th:switch="${iter.index}">
+                        <!--<a th:href="" th:case="0">Desinscrever</a>-->
+                        <a th:href="@{|/../../inscrever?deputadoId=${deputado.id}&eventoId=${evento.id}|}" th:case="1">Inscrever</a> <!-- form? -->
+                    </td>
                     <!-- excluir (popup, escrever o nome?) -->
                 </tr>
             </tbody>
         </table>
     </section>
-
 </body>
 </html>

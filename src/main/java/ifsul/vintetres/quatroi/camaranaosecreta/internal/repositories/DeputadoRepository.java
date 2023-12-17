@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ifsul.vintetres.quatroi.camaranaosecreta.internal.entities.Deputado;
 
 public interface DeputadoRepository extends JpaRepository<Deputado, Integer> {
-
-	// Se houver entidade ativa/inativa: ativar/desativar...
 	
 	public List<Deputado> findAllByOrderByNomeAsc();
 	

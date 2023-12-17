@@ -1,22 +1,34 @@
 package ifsul.vintetres.quatroi.camaranaosecreta.internal.thymeleaf;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ifsul.vintetres.quatroi.camaranaosecreta.internal.entities.Deputado;
 import ifsul.vintetres.quatroi.camaranaosecreta.internal.services.DeputadoReadService;
 import ifsul.vintetres.quatroi.camaranaosecreta.internal.services.EventoReadService;
+import ifsul.vintetres.quatroi.camaranaosecreta.internal.services.EventoUpdateService;
 
 @Controller
 public class TemplateController {
 	
 	private static final boolean SHOW_HOME_PAGE = true;
+	
+	@Autowired
+	private DeputadoReadService deputadoReadService;
+
+	@Autowired
+	private EventoReadService eventoReadService;
+	
+	@Autowired
+	private EventoUpdateService eventoUpdateService;
+	
+	private void addDeputadoToModelIfPresent(ModelAndView modelAndView, Integer id) { // Exception throwIfNotPresent?
+		deputadoReadService.findById(id).ifPresent(deputado -> modelAndView.addObject("deputado", deputado));
+	}
 
 	@GetMapping("/")
 	public String home() {
@@ -25,9 +37,6 @@ public class TemplateController {
 		else
 			return "redirect:/listaDeputados";
 	}
-
-	@Autowired
-	private DeputadoReadService deputadoReadService;
 
 	@GetMapping("/" + Templates.LISTA_DEPUTADOS)
 	public ModelAndView listaDeputados() {
@@ -38,29 +47,20 @@ public class TemplateController {
 		return modelAndView;
 	}
 
-	@GetMapping("/" + Templates.DEPUTADO + "/{id}")
-	public ModelAndView deputado(@PathVariable Integer id) {
-		ModelAndView modelAndView = new ModelAndView(Templates.DEPUTADO);
-
-		Optional<Deputado> deputado = deputadoReadService.findById(id);
-
-		if(deputado.isPresent())
-			modelAndView.addObject("deputado", deputado.get());
-		// else...
-
-		return modelAndView;
-	}
-
-	@Autowired
-	private EventoReadService eventoReadService;
+//	@GetMapping("/" + Templates.DEPUTADO + "/{id}")
+//	public ModelAndView deputado(@PathVariable Integer id) {
+//		ModelAndView modelAndView = new ModelAndView(Templates.DEPUTADO);
+//
+//		addDeputadoToModelIfPresent(modelAndView, id); // exception?
+//
+//		return modelAndView;
+//	}
 
 	@GetMapping("/" + Templates.LISTA_EVENTOS)
 	public ModelAndView listaEventos() {
 		ModelAndView modelAndView = new ModelAndView(Templates.LISTA_EVENTOS);
 		
-		modelAndView.addObject("eventosAndamento", eventoReadService.findAllCurrentEventos());
-		modelAndView.addObject("eventosFuturos", eventoReadService.findAllFutureEventos());
-		modelAndView.addObject("eventosPassados", eventoReadService.findAllPastEventos());
+		modelAndView.addObject("eventos", eventoReadService.findAll());
 
 		return modelAndView;
 	}
@@ -68,38 +68,33 @@ public class TemplateController {
 	@GetMapping("/" + Templates.LISTA_EVENTOS + "/{deputadoId}")
 	public ModelAndView listaEventosDeputado(@PathVariable Integer deputadoId) {
 		ModelAndView modelAndView = new ModelAndView(Templates.LISTA_EVENTOS_DEPUTADO);
-		
-		// Map inscrito, naoInscrito?
 
-		modelAndView.addObject("eventosInscrito", eventoReadService.findAllBySubscribedDeputado(deputadoId));
-//		modelAndView.addObject("eventosInscritoAndamento", eventoReadService.findAllCurrentEventosWhereDeputadoIsSubscribed(deputadoId));
-//		modelAndView.addObject("eventosInscritoFuturos", eventoReadService.findAllFutureEventosWhereDeputadoIsSubscribed(deputadoId));
-//		modelAndView.addObject("eventosInscritoPassados", eventoReadService.findAllPastEventosWhereDeputadoIsSubscribed(deputadoId));
+		modelAndView.addObject("listasEventos", eventoReadService.findSubscribedAndNotByDeputado(deputadoId));
 		
-		modelAndView.addObject("eventosNaoInscritoAndamento", eventoReadService.findAllCurrentEventosWhereDeputadoIsNotSubscribed(deputadoId));
-		modelAndView.addObject("eventosNaoInscritoFuturos", eventoReadService.findAllFutureEventosWhereDeputadoIsNotSubscribed(deputadoId));
-		modelAndView.addObject("eventosNaoInscritoPassados", eventoReadService.findAllPastEventosWhereDeputadoIsNotSubscribed(deputadoId));
-		
-		Optional<Deputado> deputado = deputadoReadService.findById(deputadoId);
-
-		if(deputado.isPresent())
-			modelAndView.addObject("deputado", deputado.get());
+		addDeputadoToModelIfPresent(modelAndView, deputadoId);
 
 		return modelAndView;
 	}
 
 	@GetMapping("/" + Templates.INSCREVER)
-	public String inscrever(@RequestParam(required = false) Integer deputadoId, @RequestParam(required = false) Integer eventoId) {
-		// ...
+	public ModelAndView inscreverTemplate(@RequestParam(required = false) Integer eventoId, @RequestParam(required = false) Integer deputadoId) {
+		ModelAndView modelAndView = new ModelAndView(Templates.INSCREVER);
 		
-		return Templates.INSCREVER; // "redirect:/" + lista_eventos + id
+		if(deputadoId == null) deputadoId = -1;
+		if(eventoId == null) eventoId = -1;
+		
+		deputadoReadService.findById(deputadoId).ifPresent(deputado -> modelAndView.addObject("deputado", deputado));
+		
+		eventoReadService.findById(eventoId).ifPresent(evento -> modelAndView.addObject("evento", evento));
+		
+		return modelAndView;
 	}
-
-	// Put inscrever
-
-//	@GetMapping("/" + Templates.CADASTRAR_EVENTO)
-//	public String cadastrarEvento() { // ?
-//		return Templates.CADASTRAR_EVENTO;
-//	}
+	
+	@PutMapping("/" + Templates.INSCREVER)
+	public String inscreverAction(@RequestParam(required = false) Integer eventoId, @RequestParam(required = false) Integer deputadoId) {
+		deputadoReadService.findById(deputadoId).ifPresent(deputado -> eventoUpdateService.subscribe(eventoId, deputado));
+		
+		return "redirect:/" + Templates.LISTA_EVENTOS + "/" + deputadoId;
+	}
 	
 }

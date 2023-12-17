@@ -13,11 +13,10 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 
 import ifsul.vintetres.quatroi.camaranaosecreta.internal.entities.Deputado;
+import ifsul.vintetres.quatroi.camaranaosecreta.internal.entities.Evento;
 
 @Service
 public class APIService {
-	
-	static final String BASE_URL = "https://dadosabertos.camara.leg.br/api/v2/";
 	
 	@Autowired
 	private RestTemplate restTemplate;
@@ -28,14 +27,17 @@ public class APIService {
 	}
 	
 	public String getDadosAbertosDataAsString(String mapping) {
-		String url = BASE_URL + mapping;
+		String url = APIConfig.BASE_URL + mapping;
 		return getDataAsString(url);
 	}
 	
 	private <T> T getJSONObject(String mapping, Class<T> classOfT) { // ""?
 		String data = getDadosAbertosDataAsString(mapping);
 		
-		JSONObject jsonObject = new JSONObject(data).getJSONObject("dados").getJSONObject("ultimoStatus");
+		JSONObject jsonObject = new JSONObject(data).getJSONObject("dados");
+		
+		if(classOfT.equals(Deputado.class))
+			jsonObject = jsonObject.getJSONObject("ultimoStatus");
 		
 		return new Gson().fromJson(jsonObject.toString(), classOfT);
 	}
@@ -65,5 +67,13 @@ public class APIService {
 	}	
 	
 	// partido?
+	
+	public Evento getEvento(int id) {
+		return getJSONObject("eventos/" + id, Evento.class);
+	}
+	
+	public Set<Evento> getAllEventos() {
+		return getJSONArray("eventos", Evento.class);
+	}
 
 }

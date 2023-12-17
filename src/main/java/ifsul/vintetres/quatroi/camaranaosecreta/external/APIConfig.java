@@ -7,6 +7,8 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class APIConfig {
 
+	static final String BASE_URL = "https://dadosabertos.camara.leg.br/api/v2/";
+	
 	@Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
