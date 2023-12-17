@@ -1,4 +1,4 @@
-package ifsul.vintetres.quatroi.camaranaosecreta.interior.domain;
+package ifsul.vintetres.quatroi.camaranaosecreta.internal.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,7 +15,8 @@ import lombok.Setter;
 public class Deputado {
 
 	@Id
-	private int id;
+	// GeneratedValue só se for incluído o cadastro de deputados.
+	private Integer id;
 	
 	private String nome;
 	

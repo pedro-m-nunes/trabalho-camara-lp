@@ -1,7 +1,7 @@
-package ifsul.vintetres.quatroi.camaranaosecreta.exterior;
+package ifsul.vintetres.quatroi.camaranaosecreta.external;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
-import ifsul.vintetres.quatroi.camaranaosecreta.interior.domain.Deputado;
+import ifsul.vintetres.quatroi.camaranaosecreta.internal.entities.Deputado;
 
 @Service
 public class APIService {
@@ -40,12 +40,12 @@ public class APIService {
 		return new Gson().fromJson(jsonObject.toString(), classOfT);
 	}
 	
-	private <T> List<T> getJSONArray(String mapping, Class<T> classOfT) { // ""?
+	private <T> Set<T> getJSONArray(String mapping, Class<T> classOfT) { // ""?
 		String data = getDadosAbertosDataAsString(mapping);
 		
 		JSONArray jsonArray = new JSONObject(data).getJSONArray("dados");
 		
-		List<T> jsonObjects = new ArrayList<>(); // LinkedHashSet?
+		Set<T> jsonObjects = new LinkedHashSet<>(); // LinkedHashSet?
 		
 		for(int i = 0; i < jsonArray.length(); i++) {
 			jsonObjects.add(new Gson().fromJson(jsonArray.getJSONObject(i).toString(), classOfT));
@@ -60,11 +60,10 @@ public class APIService {
 		return getJSONObject("deputados/" + id, Deputado.class);
 	}
 	
-	public List<Deputado> getAllDeputados() {
+	public Set<Deputado> getAllDeputados() {
 		return getJSONArray("deputados", Deputado.class);
-	}
+	}	
 	
-	// clone // if is array, cloneAll (?)
-	// cloneAll
+	// partido?
 
 }

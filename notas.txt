@@ -5,6 +5,12 @@ TRABALHO
 - Renderização de templates HTML
 - Documentação com Swagger (extra)
 
+Classes
+- Deputado
+- Evento
+- Partido
+- Local (do evento)
+
 
 Classe Deputado
 - id

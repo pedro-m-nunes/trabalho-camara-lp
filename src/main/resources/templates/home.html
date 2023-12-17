@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+
+  <section>
+    <div>Telas</div>
+    <ul>
+      <li><a th:href="@{listaDeputados}">Lista de deputados</a></li>
+      <!-- <li><a th:href="@{deputado}">Tela do deputado</a></li> -->
+      <li><a th:href="@{listaEventos}">Lista de eventos</a></li>
+      <li><a th:href="@{inscrever}">Inscrever deputado em evento</a></li>
+    </ul>
+  </section>
+
+  <!-- <section>
+    <div>Outras telas</div>
+    <ul>
+      <li><a th:href="@{cadastrarEvento}">Cadastrar evento</a></li>
+    </ul>
+  </section> -->
+
+  <section>
+    <div>Banco de dados</div>
+    <ul>
+      <li><a th:href="@{h2-console}">H2 Console</a></li>
+    </ul>
+  </section>
+
+</body>
+</html>

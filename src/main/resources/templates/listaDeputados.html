@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deputados</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Partido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="deputado : ${deputados}">
+                <td th:text="${deputado.id}"></td>
+                <td th:text="${deputado.nome}"></td>
+                <td th:text="${deputado.siglaPartido}"></td>
+                <td><a th:href="@{|/deputado/${deputado.id}|}">Acessar</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

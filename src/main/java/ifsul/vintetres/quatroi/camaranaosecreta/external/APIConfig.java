@@ -1,4 +1,4 @@
-package ifsul.vintetres.quatroi.camaranaosecreta.exterior;
+package ifsul.vintetres.quatroi.camaranaosecreta.external;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

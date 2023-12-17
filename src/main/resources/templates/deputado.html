@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${deputado.nome}"></title>
+</head>
+<body>
+    <div>Deputado(a): <span th:text="${deputado.nome}"></span></div>
+    <!--<img src="https://www.camara.leg.br/internet/deputado/bandep/220593.jpg" alt="">-->
+    <ul>
+        <li><a th:href="@{|../listaEventos/${deputado.id}|}">Ver eventos</a></li>
+        <li><a th:href="@{|../inscrever?deputadoId=${deputado.id}|}">Inscrever</a></li>
+    </ul>
+</body>
+</html>
