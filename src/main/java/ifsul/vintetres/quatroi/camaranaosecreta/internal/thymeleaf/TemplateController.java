@@ -96,4 +96,11 @@ public class TemplateController {
 		return "redirect:/" + Templates.LISTA_EVENTOS + "/" + deputadoId;
 	}
 	
+	@PutMapping("/" + Templates.DESINSCREVER)
+	public String desinscreverAction(@RequestParam(required = false) Integer eventoId, @RequestParam(required = false) Integer deputadoId) {
+		deputadoReadService.findById(deputadoId).ifPresent(deputado -> eventoUpdateService.unsubscribe(eventoId, deputadoId));
+		
+		return "redirect:/" + Templates.LISTA_EVENTOS + "/" + deputadoId;
+	}
+	
 }

@@ -15,11 +15,12 @@ import lombok.Setter;
 public class Deputado {
 
 	@Id
-	// GeneratedValue só se for incluído o cadastro de deputados.
 	private Integer id;
 	
 	private String nome;
 	
 	private String siglaPartido; // id...
+	
+	private String siglaUf;
 	
 }

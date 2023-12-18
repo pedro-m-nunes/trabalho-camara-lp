@@ -28,11 +28,21 @@ public class EventoUpdateService implements UpdateService<Evento, Integer> {
 		
 		evento.getInscritos().add(deputado);
 		
-		return eventoRepository.save(evento);
+		return update(id, evento);
 	}
 	
 	// subscribeAll?
 	
-	// unsubscribe?
+	@Autowired
+	private DeputadoReadService deputadoReadService;
+	
+	public Evento unsubscribe(Integer eventoId, Integer deputadoId) {
+		Evento evento = eventoRepository.findById(eventoId).get();
+		Deputado deputado = deputadoReadService.findById(deputadoId).get();
+		
+		evento.getInscritos().remove(deputado);
+		
+		return update(eventoId, evento);
+	}
 
 }

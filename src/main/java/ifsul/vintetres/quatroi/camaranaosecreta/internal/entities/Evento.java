@@ -4,8 +4,7 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
@@ -21,7 +20,6 @@ import lombok.Setter;
 public class Evento {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(nullable = false)
@@ -35,9 +33,16 @@ public class Evento {
 	
 	// local?
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Deputado> inscritos;
 
+	public Evento(Integer id, String descricaoTipo, String descricao) {
+		super();
+		this.id = id;
+		this.descricaoTipo = descricaoTipo;
+		this.descricao = descricao;
+	}
+	
 	public Evento(String descricaoTipo, String descricao) {
 		super();
 		this.descricaoTipo = descricaoTipo;

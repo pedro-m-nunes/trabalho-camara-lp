@@ -16,23 +16,32 @@
 		</ul>
 	</section>
 
-	<h1 class="titulo-de-pagina">Inscrição</h1>
+	<!-- Sem validar se o deputado já está inscrito, no momento -->
 
-	<!--<div>Evento: <span th:text="${evento?.id}"></span></div>
-	<div>Deputado: <span th:text="${deputado?.nome}"></span></div>-->
+	<h1 class="titulo-de-pagina">Inscrição</h1>
 	
     <form action="#" th:action="@{inscrever}" th:method="put">
-        <label for="eventoId">Evento</label>
+        <div th:unless="${deputado != null}">
+            <label for="deputadoId">Deputado(a):</label>
+            <select id="deputadoId" name="deputadoId">
+        	    <option th:each="opcaoDeputado : ${deputados}" th:value="${opcaoDeputado.id}" th:text="${opcaoDeputado.nome} + ' (' + ${opcaoDeputado.id} + ')'" th:selected="${opcaoDeputado.id == __${deputado?.id}__}"></option>
+            </select>
+        </div>
+        <div th:if="${deputado != null}">
+            Deputado(a): <span th:text="${deputado.nome}"></span>
+            <input type="hidden" id="deputadoId" name="deputadoId" th:value="${deputado.id}">
+        </div>
+
+        <label for="eventoId">Evento:</label>
         <select id="eventoId" name="eventoId">
-        	<option th:each="opcaoEvento : ${eventosNaoInscrito}" th:value="${opcaoEvento.id}" th:text="${opcaoEvento.id} + ' - ' + ${opcaoEvento.descricaoTipo}" th:selected="${opcaoEvento.id == __${evento?.id}__}"></option>
+        	<option th:each="opcaoEvento : ${eventosNaoInscrito}" th:value="${opcaoEvento.id}" th:text="${opcaoEvento.descricaoTipo} + ' (' + ${opcaoEvento.id} + ')'" th:selected="${opcaoEvento.id == __${evento?.id}__}"></option>
         </select>
         
-        <label for="deputadoId">Deputado(a)</label>
-        <select id="deputadoId" name="deputadoId">
-        	<option th:each="opcaoDeputado : ${deputados}" th:value="${opcaoDeputado.id}" th:text="${opcaoDeputado.nome} + ' (' + ${opcaoDeputado.id} + ')'" th:selected="${opcaoDeputado.id == __${deputado?.id}__}"></option>
-        </select>
-
         <input type="submit" value="Inscrever">
+
+        <div>
+            <a th:if="${deputado != null}" th:href="@{|listaEventos/${deputado.id}|}">Voltar</a>
+        </div>
     </form>
 </body>
 </html>

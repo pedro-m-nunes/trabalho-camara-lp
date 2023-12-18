@@ -10,6 +10,8 @@ public interface DeputadoRepository extends JpaRepository<Deputado, Integer> {
 	
 	public List<Deputado> findAllByOrderByNomeAsc();
 	
+	public List<Deputado> findAllBySiglaPartido(String siglaPartido);
+	
 	// query por partido
 	
 	// query por nome

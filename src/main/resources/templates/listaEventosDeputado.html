@@ -19,32 +19,45 @@
 	<h1 class="titulo-de-pagina">Página do(a) deputado(a)</h1>
 
     <h2 th:text="${deputado.nome}"></h2>
-    <img th:src="@{|https://www.camara.leg.br/internet/deputado/bandep/${deputado.id}.jpg|}" alt="Foto do(a) deputado(a)">
+    <img height="180px" th:src="@{|https://www.camara.leg.br/internet/deputado/bandep/${deputado.id}.jpg|}" alt="Foto do(a) deputado(a)">
+    <div>Partido: <span th:text="${deputado.siglaPartido}"></span></div>
+    <div>UF: <span th:text="${deputado.siglaUf}"></span></div>
     <div><a th:href="@{|../inscrever?deputadoId=${deputado.id}|}">Inscrever em evento</a></div>
-    
-    <section th:each="eventos, iter : ${listasEventos}">
+
+    <section th:each="eventos, iterTipo : ${listasEventos}">
         <h2>
-            Eventos <span th:switch="${iter.index}">
-                <span th:case="0">inscrito</span>
-                <span th:case="1">não inscrito</span>
-            </span> <!-- ""? -->
+            Eventos <span th:switch="${iterTipo.index}">
+                <span th:case="0">inscrito(a)</span>
+                <span th:case="1">não inscrito(a)</span>
+            </span>
         </h2>
         <table th:unless="${#lists.size(eventos) == 0}">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">#</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Id</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="evento : ${eventos}">
-                    <td th:text="${evento.id}"></td>
+                <tr th:each="evento, iterEvento : ${eventos}">
+                    <td th:text="${iterEvento.index + 1}"></td>
                     <td th:text="${evento.descricaoTipo}"></td>
                     <td th:text="${evento.descricao}"></td>
-                    <td th:switch="${iter.index}">
-                        <!--<a th:href="" th:case="0">Desinscrever</a>-->
-                        <a th:href="@{|/../../inscrever?deputadoId=${deputado.id}&eventoId=${evento.id}|}" th:case="1">Inscrever</a> <!-- form? -->
+                    <td th:text="${evento.id}"></td>
+                    <td th:switch="${iterTipo.index}">
+                        <form th:case="0" action="#" th:action="@{/../desinscrever}" th:method="put">
+                            <input type="hidden" id="eventoId" name="eventoId" th:value="${evento.id}">
+                            <input type="hidden" id="deputadoId" name="deputadoId" th:value="${deputado.id}">
+                            <input type="submit" value="Desinscrever">
+                        </form>
+
+                        <form th:case="1" action="#" th:action="@{/../inscrever}" th:method="put">
+                            <input type="hidden" id="eventoId" name="eventoId" th:value="${evento.id}">
+                            <input type="hidden" id="deputadoId" name="deputadoId" th:value="${deputado.id}">
+                            <input type="submit" value="Inscrever">
+                        </form>
                     </td>
                 </tr>
             </tbody>

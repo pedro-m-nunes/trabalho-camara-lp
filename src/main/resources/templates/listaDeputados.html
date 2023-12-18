@@ -21,18 +21,22 @@
     <table>
         <thead>
             <tr>
-                <th scope="col">Id</th>
-                <!--<th scope="col">Foto</th>-->
+                <th scope="col">#</th>
+                <th scope="col">Foto</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Partido</th>
+                <th scope="col">UF</th>
+                <th scope="col">Id</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="deputado : ${deputados}">
-                <td th:text="${deputado.id}"></td>
-                <!--<td><img th:src="@{|https://www.camara.leg.br/internet/deputado/bandep/${deputado.id}.jpg|}" alt="Foto do(a) deputado(a)"></td>-->
+            <tr th:each="deputado, iter : ${deputados}">
+                <td th:text="${iter.index + 1}"></td>
+                <td><img class="imagem-perfil" height="80px" th:src="@{|https://www.camara.leg.br/internet/deputado/bandep/${deputado.id}.jpg|}" alt="Foto do(a) deputado(a)"></td>
                 <td th:text="${deputado.nome}"></td>
                 <td th:text="${deputado.siglaPartido}"></td>
+                <td th:text="${deputado.siglaUf}"></td>
+                <td th:text="${deputado.id}"></td>
                 <td><a th:href="@{|/listaEventos/${deputado.id}|}">Acessar</a></td>
             </tr>
         </tbody>

@@ -37,6 +37,10 @@ public class EventoReadService implements ReadService<Evento, Integer> {
 		return eventoRepository.existsById(id);
 	}
 	
+	public List<Integer> findAllIds() {
+		return eventoRepository.findAllIds();
+	}
+	
 	public List<Evento> findWhereDeputadoIsSubscribed(Integer deputadoId) {
 		return eventoRepository.findAllBySubscribedDeputado(deputadoId);
 	}
@@ -53,7 +57,7 @@ public class EventoReadService implements ReadService<Evento, Integer> {
 	}
 	
 //	public List<Evento> findAllInChronologicalOrder() {
-//		return eventoRepository.findAllByOrderByInicio();
+//		return eventoRepository.findAllByOrderByDataHoraInicio();
 //	}
 	
 //	public List<Evento> findAllPastEventos() {

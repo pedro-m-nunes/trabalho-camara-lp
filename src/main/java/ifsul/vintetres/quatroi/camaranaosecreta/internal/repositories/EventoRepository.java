@@ -9,6 +9,9 @@ import ifsul.vintetres.quatroi.camaranaosecreta.internal.entities.Evento;
 
 public interface EventoRepository extends JpaRepository<Evento, Integer> {
 	
+	@Query("SELECT e.id FROM Evento e")
+	public List<Integer> findAllIds();
+	
 	@Query("SELECT e FROM Evento e INNER JOIN e.inscritos d WHERE d.id = ?1")
 	public List<Evento> findAllBySubscribedDeputado(Integer deputadoId);
 	

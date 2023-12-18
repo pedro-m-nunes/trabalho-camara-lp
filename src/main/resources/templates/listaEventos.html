@@ -22,16 +22,18 @@
         <table th:unless="${#lists.size(eventos) == 0}">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">#</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Id</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="evento : ${eventos}">
-                    <td th:text="${evento.id}"></td>
+                <tr th:each="evento, iter : ${eventos}">
+                    <td th:text="${iter.index + 1}"></td>
                     <td th:text="${evento.descricaoTipo}"></td>
                     <td th:text="${evento.descricao}"></td>
+                    <td th:text="${evento.id}"></td>
                     <!-- excluir evento (popup, escrever o nome?) -->
                 </tr>
             </tbody>
@@ -39,5 +41,7 @@
         <div th:if="${#lists.size(eventos) == 0}">Nenhum evento para mostrar</div>
         <!-- adicionar evento? -->
     </section>
+
+
 </body>
 </html>

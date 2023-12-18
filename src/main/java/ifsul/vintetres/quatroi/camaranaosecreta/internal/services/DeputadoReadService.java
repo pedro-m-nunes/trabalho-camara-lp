@@ -40,4 +40,8 @@ public class DeputadoReadService implements ReadService<Deputado, Integer> {
 		return deputadoRepository.findAllByOrderByNomeAsc();
 	}
 	
+	public List<Deputado> findAllBySiglaPartido(String siglaPartido) {
+		return deputadoRepository.findAllBySiglaPartido(siglaPartido);
+	}
+	
 }

@@ -31,7 +31,7 @@ public class APIService {
 		return getDataAsString(url);
 	}
 	
-	private <T> T getJSONObject(String mapping, Class<T> classOfT) { // ""?
+	private <T> T getJSONObject(String mapping, Class<T> classOfT) {
 		String data = getDadosAbertosDataAsString(mapping);
 		
 		JSONObject jsonObject = new JSONObject(data).getJSONObject("dados");
@@ -42,12 +42,12 @@ public class APIService {
 		return new Gson().fromJson(jsonObject.toString(), classOfT);
 	}
 	
-	private <T> Set<T> getJSONArray(String mapping, Class<T> classOfT) { // ""?
+	private <T> Set<T> getJSONArray(String mapping, Class<T> classOfT) {
 		String data = getDadosAbertosDataAsString(mapping);
 		
 		JSONArray jsonArray = new JSONObject(data).getJSONArray("dados");
 		
-		Set<T> jsonObjects = new LinkedHashSet<>(); // LinkedHashSet?
+		Set<T> jsonObjects = new LinkedHashSet<>();
 		
 		for(int i = 0; i < jsonArray.length(); i++) {
 			jsonObjects.add(new Gson().fromJson(jsonArray.getJSONObject(i).toString(), classOfT));

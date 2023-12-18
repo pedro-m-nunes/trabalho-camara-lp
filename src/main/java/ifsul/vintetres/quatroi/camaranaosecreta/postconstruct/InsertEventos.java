@@ -22,7 +22,14 @@ public class InsertEventos {
 	private void run() {
 		Set<Evento> eventos = new LinkedHashSet<>();
 		
-		eventos.add(new Evento("Churrasco", "Venha participar de um churrasco exclusivo, onde a política encontra o sabor! Junte-se a nós para uma tarde descontraída entre deputados, boa comida e conversas animadas. Será um evento imperdível de camaradagem e sabores intensos. Contamos com a sua presença!"));
+		eventos.add(new Evento(1, "Abertura da Câmara", "Os 10 mandamentos devem ser as únicas leis ou devemos criar novas?"));
+		eventos.add(new Evento("Lolzinho", "5v5. Só não vale Yuumi."));
+		eventos.add(new Evento("Lolzinho", "5v5 tradicional."));
+		eventos.add(new Evento("Lolzinho", "5v5 double jungle."));
+		eventos.add(new Evento("LEGO Fortnite do PCdoB", "Pautas: projetar um veículo para destruirmos as construções do PL; construir um curral."));
+		eventos.add(new Evento("Show do Eminem", "Grande cantor."));
+		eventos.add(new Evento("Racha de moto", "Um simples racha de moto."));
+		eventos.add(new Evento("Rachão de moto", "Um racha de moto mais sofisticado."));
 		
 		eventoCreateService.saveAll(eventos);
 	}
