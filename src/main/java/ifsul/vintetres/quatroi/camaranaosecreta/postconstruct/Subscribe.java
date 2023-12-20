@@ -43,16 +43,16 @@ public class Subscribe {
 			eventoUpdateService.subscribe(eventoId, deputados.get(2));
 		}
 
-		// "Vermelho", "Celso Russomanno" e "Lebrão" em "Show do Eminem"
-		eventoUpdateService.subscribe(71583, deputadoReadService.findById(204396).get());
-		eventoUpdateService.subscribe(71583, deputadoReadService.findById(73441).get());
-		eventoUpdateService.subscribe(71583, deputadoReadService.findById(220600).get());
-		
-		// Deputados do PCdoB (e "Vermelho") em "LEGO Fortnite do PCdoB"
-		for(Deputado deputado : deputadoReadService.findAllBySiglaPartido("PCdoB"))
-			eventoUpdateService.subscribe(71582, deputadoReadService.findById(deputado.getId()).get());
-		
-		eventoUpdateService.subscribe(71582, deputadoReadService.findById(204396).get());
+//		// "Vermelho", "Celso Russomanno" e "Lebrão" em "Show do Eminem"
+//		eventoUpdateService.subscribe(71583, deputadoReadService.findById(204396).get());
+//		eventoUpdateService.subscribe(71583, deputadoReadService.findById(73441).get());
+//		eventoUpdateService.subscribe(71583, deputadoReadService.findById(220600).get());
+//		
+//		// Deputados do PCdoB (e "Vermelho") em "LEGO Fortnite do PCdoB"
+//		for(Deputado deputado : deputadoReadService.findAllBySiglaPartido("PCdoB"))
+//			eventoUpdateService.subscribe(71582, deputadoReadService.findById(deputado.getId()).get());
+//		
+//		eventoUpdateService.subscribe(71582, deputadoReadService.findById(204396).get());
 	}
 	
 }
